@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            overflow: hidden;
+
+            background-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .notification-android {
+            display: flex;
+            background-color: #fff;
+            margin: 1vh;
+            padding: 1vh .9vh;
+            border-radius: .25vh;
+
+        }
+        .notification-android .icon {
+            height: 4vh;
+            width: 4vh; 
+            min-height: 4vh;
+            min-width: 4vh;
+            background-color: #1e8cd1;
+            background-image: url('data:image/png;base64,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');
+            background-size: cover;
+            border-radius: 50%;
+            margin-right: 1vh;
+        }
+        .notification-android .content {
+                width: 100%;
+        }
+        .notification-android .top {
+                width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .notification-android .title {
+            font-size: 1.4vh;
+        }
+        .notification-android .timestamp {
+            font-size: 1.1vh;
+            color: #666;
+        }
+        .notification-android .bottom {
+           font-size: 1.1vh;
+            color: #666;
+            margin-top: .5vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-android">
+        <div class="icon"></div>
+        <div class="content">
+            <div class="top">
+                <div class="title">New Caption from Cut'n'Share</div>
+                <div class="timestamp">11:22</div>
+            </div>
+            <div class="bottom">
+                Touch to view and share.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
