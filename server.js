@@ -7,6 +7,8 @@ const fs = require('fs');
 // const FB = require('fb');
 const moment = require('moment');
 
+var port = process.env.PORT || 3000;
+
 const yourtoken = 'f569c677ec0bbab82d5ae00be93499f5';
 const yourid = '110420452907305';
 const yoursecret = '3a4a76b943435f98d3a740f5479b110b';
@@ -24,7 +26,7 @@ app.use(express.static('public'));
 app.get('/socket-client', (req, res) => {res.sendFile(path.resolve(__dirname, 'node_modules/socket.io-client/dist/socket.io.js'))});
 
 
-server.listen(3000, function () {
+server.listen(port, function () {
     console.log('Example app listening on port 3000!')
 });
 
