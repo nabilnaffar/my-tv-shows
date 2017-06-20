@@ -1,7 +1,12 @@
-let notification = document.getElementById('notification');
-let shareBar = document.getElementById('share-modal');
-let editor = document.getElementById('editor');
+'use strict';
 
+var notification = document.getElementById('notification');
+var shareBar = document.getElementById('share-modal');
+var editor = document.getElementById('editor');
+var video = document.getElementById('video');
+var sliderFrom = document.getElementById('slider-from');
+var sliderTo = document.getElementById('slider-to');
+var originalSrc = '/videos/trimmed20.mp4';
 
 editor.style.display = 'none';
 shareBar.style.display = 'none';
@@ -17,7 +22,7 @@ function init(){
         socket.emit('client_info', {type: 'mobile'});
     });
 
-    socket.on('edit_video', ()=>{
+    socket.on('edit_video', function(){
         showNotification();
     });
 
@@ -43,7 +48,24 @@ function displayShareModal(){
 function displayEditor(){
     hideNotification();
     editor.style.display='block';
+
+    // setupSlider();
+    // onSliderChange();
 }
+
+// function setupSlider(){
+    
+// }
+
+// function onSliderChange(){
+//     var src = originalSrc + '#t=' + sliderFrom.value +',' + sliderTo.value;
+//     video.removeAttribute('source');
+//     var source = document.createElement('source');
+//     source.setAttribute('src', src);
+//     source.setAttribute('type','video/mp4');
+//     video.appendChild(source);
+//     video.play();
+// }
 
 
 function loginToFB() {
