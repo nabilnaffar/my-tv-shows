@@ -7,7 +7,8 @@ var video = document.getElementById('video');
 var sliderFrom = document.getElementById('slider-from');
 var sliderTo = document.getElementById('slider-to');
 var originalSrc = '/videos/trimmed20.mp4';
-
+var filename = '';
+var socket;
 editor.style.display = 'none';
 shareBar.style.display = 'none';
 hideNotification();
@@ -15,7 +16,7 @@ hideNotification();
 function init(){
     console.log('loaded');
 
-    const socket = io('/');
+    socket = io('/');
     socket.on('connect', function () {
         console.log('Mobile is connected!');
         socket.emit('client_info', {type: 'mobile'});
@@ -31,7 +32,7 @@ function setFilename(name){
     if(video.children && video.children.length){
         video.removeChild(video.children[0]);
     }
-
+    filename = name;
     originalSrc = '/videos/'+name+'.mp4';  
     var source = document.createElement('source');
     source.setAttribute('src', originalSrc);
@@ -45,7 +46,8 @@ function setFilename(name){
 // }
 
 function shareToFB(){
-    loginToFB();
+    // loginToFB();
+    socket.emit('publish', {name: filename, from: sliderFrom.value, to: sliderTo.value});
 }
 
 function showNotification(){

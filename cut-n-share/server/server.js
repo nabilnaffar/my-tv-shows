@@ -3,10 +3,14 @@ const express = require('express');
 const io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
+const fbUpload = require('facebook-api-video-upload');
+const FB = require('fb');
 
+const yourtoken = 'f569c677ec0bbab82d5ae00be93499f5';
+const yourid = '110420452907305';
+const yoursecret = '3a4a76b943435f98d3a740f5479b110b';
 
 var FfmpegCommand = require('fluent-ffmpeg');
-
 
 
 const app = express()
@@ -17,6 +21,7 @@ let clients = {tv: undefined, mobile: undefined};
 
 app.use(express.static('public'));
 app.get('/socket-client', (req, res) => {res.sendFile(path.resolve(__dirname, 'node_modules/socket.io-client/dist/socket.io.js'))});
+
 
 server.listen(3000, function () {
     console.log('Example app listening on port 3000!')
@@ -36,7 +41,7 @@ socket.on('connection', (client) => {
             console.log('send_for_editing called with: ', data.to);
             
             let fileName = 'trimmed20-' + hashCode();
-            let video = trim(Math.max(0, (data.to - 5)), data.to, fileName, err => { //last 20 secs
+            let video = trim('public/videos/game01.mp4', Math.max(0, (data.to - 20)), data.to, fileName, err => { //last 20 secs
                 if(err){
                     console.log(err);
                     return;
@@ -50,19 +55,32 @@ socket.on('connection', (client) => {
     });
 
     client.on('publish', data => {
-        let video = trim(data.from, data.to, 'trimmed10', err => {
+        console.log('----> ' , typeof data.from);
+        let video = trim('public/videos/'+data.name+'.mp4', Math.max(0, data.from), Math.max(20, data.to) , 'sharable', err => {
                 if(err){
                     console.log(err);
                     return;
                 }
                 //publish trimmed10 here!
+                // const args = {
+                //     token: yourtoken, // with the permission to upload 
+                //     id: yourid, //The id represent {page_id || user_id || event_id || group_id} 
+                //     stream: fs.createReadStream(path.resolve(__dirname, 'public/videos/sharable.mp4')) //path to the video 
+                // };
+                // fbUpload(args).then((res) => {
+                //     console.log('res: ', res);
+                //     //res:  { success: true, video_id: '1838312909759132' } 
+                // }).catch((e) => {
+                //     console.error(e);
+                // });
             });
             
     });
 });
 
-function trim(from, to,filename, cb){
-    var command = new FfmpegCommand('public/videos/game01.mp4');
+function trim(source, from, to,filename, cb){
+    //'public/videos/game01.mp4'
+    var command = new FfmpegCommand(source);
     command.setStartTime('00:00:03')
         .setDuration('10')
         .output('public/videos/'+filename+'.mp4')
