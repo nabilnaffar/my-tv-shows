@@ -1,6 +1,15 @@
+let notification = document.getElementById('notification');
+let shareBar = document.getElementById('share-modal');
+let editor = document.getElementById('editor');
+
+
+editor.style.display = 'none';
+shareBar.style.display = 'none';
+
+hideNotification();
+
 function init(){
     console.log('loaded');
-    document.getElementById('ok').style.display = 'none';
 
     const socket = io('/');
     socket.on('connect', function () {
@@ -10,11 +19,32 @@ function init(){
 
     socket.on('edit_video', ()=>{
         document.getElementById('title').innerHTML = 'Editing video...';
-        document.getElementById('ok').style.display = 'block';
     });
 
     
 }
+
+function shareToFB(){
+    loginToFB();
+}
+
+function showNotification(){
+    notification.style.display='flex';
+}
+
+function hideNotification(){
+    notification.style.display='none';
+}
+
+function displayShareModal(){
+    shareBar.style.display = 'flex';
+}
+
+function displayEditor(){
+    hideNotification();
+    editor.style.display='block';
+}
+
 
 function loginToFB() {
     FB.login(function (response) {
@@ -40,7 +70,6 @@ function postVideo(){
 
 function done(){
     document.getElementById('title').innerHTML = 'Mobile app';
-    document.getElementById('ok').style.display = 'none';
 }
 
 
