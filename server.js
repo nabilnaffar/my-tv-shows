@@ -27,7 +27,7 @@ app.get('/socket-client', (req, res) => {res.sendFile(path.resolve(__dirname, 'n
 
 
 server.listen(port, function () {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port '+port)
 });
 
 
