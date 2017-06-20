@@ -1,6 +1,7 @@
 console.log('loaded');
 
 const socket = io('/');
+let video = document.getElementById('video');
 socket.on('connect', function () {
     console.log('Player is connected!');
     socket.emit('client_info', {type: 'tv'});
@@ -8,5 +9,5 @@ socket.on('connect', function () {
 
 
 function sendToEdit(){
-    socket.emit('send_for_editing');
+    socket.emit('send_for_editing', {to: video.currentTime});
 }
