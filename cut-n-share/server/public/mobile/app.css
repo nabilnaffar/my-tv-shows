@@ -184,3 +184,8 @@ body.mobile-desktop .ui-page.ui-page-theme-a.ui-page-active{
     background-size: cover;
     background-color: #999;
 }
+
+#editor {
+ height: 100%; 
+ background-color: #14151a;
+}
