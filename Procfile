@@ -1,1 +1,1 @@
-web: node ./cut-n-share/server/server.js
+web: node server.js
