@@ -18,7 +18,7 @@ function init(){
     });
 
     socket.on('edit_video', ()=>{
-        document.getElementById('title').innerHTML = 'Editing video...';
+        showNotification();
     });
 
     
@@ -75,7 +75,6 @@ function done(){
 
 
 window.fbAsyncInit = function() {
-    console.log('!!!');
     FB.init({
       appId            : '1973039616261193',
       autoLogAppEvents : true,
