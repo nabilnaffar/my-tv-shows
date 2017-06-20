@@ -3,8 +3,8 @@ const express = require('express');
 const io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-const fbUpload = require('facebook-api-video-upload');
-const FB = require('fb');
+// const fbUpload = require('facebook-api-video-upload');
+// const FB = require('fb');
 const moment = require('moment');
 
 const yourtoken = 'f569c677ec0bbab82d5ae00be93499f5';
