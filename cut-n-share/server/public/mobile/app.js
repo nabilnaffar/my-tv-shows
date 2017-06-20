@@ -10,7 +10,6 @@ var originalSrc = '/videos/trimmed20.mp4';
 
 editor.style.display = 'none';
 shareBar.style.display = 'none';
-
 hideNotification();
 
 function init(){
@@ -22,23 +21,39 @@ function init(){
         socket.emit('client_info', {type: 'mobile'});
     });
 
-    socket.on('edit_video', function(){
+    socket.on('edit_video', function(data){
+        setFilename(data.name)
         showNotification();
-    });
-
-    
+    });    
 }
+
+function setFilename(name){
+    if(video.children && video.children.length){
+        video.removeChild(video.children[0]);
+    }
+
+    originalSrc = '/videos/'+name+'.mp4';  
+    var source = document.createElement('source');
+    source.setAttribute('src', originalSrc);
+    source.setAttribute('type','video/mp4');
+    video.appendChild(source);
+    video.play();
+}
+
+// function hideBackground(){
+//     document.getElementById('bg').style.display = 'none';
+// }
 
 function shareToFB(){
     loginToFB();
 }
 
 function showNotification(){
-    notification.style.display='flex';
+    notification.className="notification-android";
 }
 
 function hideNotification(){
-    notification.style.display='none';
+    notification.className="notification-android-hidden";
 }
 
 function displayShareModal(){
@@ -47,7 +62,9 @@ function displayShareModal(){
 
 function displayEditor(){
     hideNotification();
+    //hideBackground();
     editor.style.display='block';
+    // hideBackground();
 
     // setupSlider();
     // onSliderChange();

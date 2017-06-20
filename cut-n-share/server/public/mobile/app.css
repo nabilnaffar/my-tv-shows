@@ -117,10 +117,6 @@ body, html {
 
 
 
-
-
-
-
          .notification-android {
             display: flex;
             background-color: #fff;
@@ -128,6 +124,14 @@ body, html {
             padding: 1vh .9vh;
             border-radius: .25vh;
 
+            visibility: visible;
+            opacity: 1;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+        .notification-android-hidden{
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
         }
         .notification-android .icon {
             height: 4vh;

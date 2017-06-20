@@ -34,14 +34,17 @@ socket.on('connection', (client) => {
     client.on('send_for_editing', (data) => {
         if(clients.mobile){
             console.log('send_for_editing called with: ', data.to);
-            let video = trim(Math.max(0, (data.to - 20)), data.to, 'trimmed20', err => { //last 20 secs
+            
+            let fileName = 'trimmed20-' + hashCode();
+            let video = trim(Math.max(0, (data.to - 5)), data.to, fileName, err => { //last 20 secs
                 if(err){
                     console.log(err);
                     return;
                 }
-                console.log('done!');
-                clients.mobile.emit('edit_video');
+                console.log('file generated : ', fileName);
+                clients.mobile.emit('edit_video', {name: fileName});
             });
+        
             
         }
     });
@@ -74,4 +77,14 @@ function trim(from, to,filename, cb){
             console.log('error: ', +err);
             cb(err);
         }).run();
+}
+
+function hashCode(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }
