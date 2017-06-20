@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const fbUpload = require('facebook-api-video-upload');
 const FB = require('fb');
+const moment = require('moment');
 
 const yourtoken = 'f569c677ec0bbab82d5ae00be93499f5';
 const yourid = '110420452907305';
@@ -39,9 +40,9 @@ socket.on('connection', (client) => {
     client.on('send_for_editing', (data) => {
         if(clients.mobile){
             console.log('send_for_editing called with: ', data.to);
-            
+            console.log('cut to ----> ' , data.to);
             let fileName = 'trimmed20-' + hashCode();
-            let video = trim('public/videos/game01.mp4', Math.max(0, (data.to - 20)), data.to, fileName, err => { //last 20 secs
+            let video = trim('public/videos/game01.mp4', Math.max(0, (data.to - 20)), 20, fileName, err => { //last 20 secs
                 if(err){
                     console.log(err);
                     return;
@@ -56,7 +57,7 @@ socket.on('connection', (client) => {
 
     client.on('publish', data => {
         console.log('----> ' , typeof data.from);
-        let video = trim('public/videos/'+data.name+'.mp4', Math.max(0, data.from), Math.max(20, data.to) , 'sharable', err => {
+        let video = trim('public/videos/'+data.name+'.mp4', Math.max(0, data.from), Math.max(0, data.to - data.from) , 'sharable', err => {
                 if(err){
                     console.log(err);
                     return;
@@ -81,8 +82,8 @@ socket.on('connection', (client) => {
 function trim(source, from, to,filename, cb){
     //'public/videos/game01.mp4'
     var command = new FfmpegCommand(source);
-    command.setStartTime('00:00:03')
-        .setDuration('10')
+    command.setStartTime(getTime(from))
+        .setDuration(to)
         .output('public/videos/'+filename+'.mp4')
         .on('end', function(err) {   
             if(!err)
@@ -104,5 +105,13 @@ function hashCode(){
     for( var i=0; i < 5; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
+    return text;
+}
+
+function getTime(sec){
+    let text =  moment("2015-01-01").startOf('day')
+    .seconds(sec)
+    .format('H:mm:ss');
+    console.log(text);
     return text;
 }

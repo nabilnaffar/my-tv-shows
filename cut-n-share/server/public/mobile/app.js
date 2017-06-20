@@ -1,4 +1,6 @@
 'use strict';
+const YOUTUBE_LINK = 'https://youtu.be/Ml2K8ziRF6A';
+const FB_TITLE = 'Check out this great video captured by DirectTV!! Join DirectTV at https://www.directvnow.com/unlimitedplus';
 
 var notification = document.getElementById('notification');
 var shareBar = document.getElementById('share-modal');
@@ -87,13 +89,14 @@ function displayEditor(){
 // }
 
 
-function loginToFB() {
+function loginToFB(cb) {
     FB.login(function (response) {
         if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
             FB.api('/me', function (response) {
                 console.log('Good to see you, ' + response.name + '.');
             });
+            cb();
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
@@ -104,7 +107,9 @@ function loginToFB() {
 }
 
 function postVideo(){
-
+    loginToFB(()=>{
+        postToFb();
+    })
 }
 
 
@@ -124,3 +129,20 @@ window.fbAsyncInit = function() {
     });
     FB.AppEvents.logPageView();
   };
+
+  function postToFb(){
+      console.log("posting..");
+        var params = {};
+        params['message'] = FB_TITLE;
+        params['link'] = YOUTUBE_LINK;//'https://www.youtube.com/watch?v=NMIZQcebfKI' ; //https://www.directvnow.com/unlimitedplus';
+
+        FB.api('/me/feed', 'post', params, function (response) {
+            if (!response || response.error) {
+                alert('Error occured');
+                console.log(response);
+            } else {
+                alert('Video posted successfully');
+                //            alert('Post ID: ' + response.id);
+            }
+        });
+  }
