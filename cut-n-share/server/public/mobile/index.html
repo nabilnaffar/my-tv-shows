@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<body onload="init()">
     <h1 id="title">Mobile App</h1>
     <button id="ok" onclick="done()">ok</button>
+    <button onclick="loginToFB()">login</button>
     
+    <script id="facebook-jssdk" src="//connect.facebook.net/en_US/sdk.js"></script>
     <script src="/socket-client"></script>
     <script src="app.js"></script>
 </body>
