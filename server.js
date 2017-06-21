@@ -40,6 +40,7 @@ socket.on('connection', (client) => {
     });
 
     client.on('send_for_editing', (data) => {
+        console.log('send_for_editing, check available clients');
         if(clients.mobile){
             console.log('send_for_editing called with: ', data.to);
             console.log('cut to ----> ' , data.to);
