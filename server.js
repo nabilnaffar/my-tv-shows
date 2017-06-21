@@ -55,6 +55,8 @@ socket.on('connection', (client) => {
             });
         
             
+        }else{
+            console.log('No mobile clients found... doing nothing...');
         }
     });
 
