@@ -9,5 +9,6 @@ socket.on('connect', function () {
 
 
 function sendToEdit(){
+    console.log('share scene!');
     socket.emit('send_for_editing', {to: video.currentTime});
 }
